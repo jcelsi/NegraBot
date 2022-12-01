@@ -7,7 +7,7 @@ module.exports = {
 		.addStringOption(option =>
 			option.setName('city')
 				.setDescription('Ciudad')
-				.setRequired()),
+				.setRequired(true)),
 	async execute(interaction) {
 		return interaction.reply('Pong!');
 	},
