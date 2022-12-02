@@ -39,7 +39,10 @@ module.exports = {
 		const config = {
 			headers: { 'X-Auth-Token': '8ec7de5a5fb84f31ba8ae4f408a8082e', 'Accept-Encoding': 'application/json' },
 		};
-		axios.get(`https://api.football-data.org/v4/competitions/WC/matches?dateFrom=${dateWithHyphens}&dateTo=${dateWithHyphens}`, config)
+
+		await interaction.deferReply();
+
+		await axios.get(`https://api.football-data.org/v4/competitions/WC/matches?dateFrom=${dateWithHyphens}&dateTo=${dateWithHyphens}`, config)
 			.then((response) => {
 				for (const match of response.data.matches) {
 					const homeTeam = match.homeTeam.name;
@@ -53,7 +56,10 @@ module.exports = {
 						reply += teams + '\n';
 					}
 				}
-				return interaction.reply(reply);
+				return interaction.editReply(reply);
+			})
+			.catch(error => {
+				return interaction.editReply('```ansi\n No hay partidos para la fecha ```');
 			});
 	},
 };
