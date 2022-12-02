@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const axios = require('axios');
+require('dotenv').config();
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -30,6 +31,7 @@ module.exports = {
 			dateWithHyphens = [year, month, '0' + (day + 1)].join('-');
 			break;
 		default:
+			// eslint-disable-next-line no-case-declarations
 			const userDate = interaction.options.getString('fecha').split(' ');
 			reply = `Los partidos para el ${userDate[0]} ${userDate[1]} son:\n`;
 			dateWithHyphens = [year, month, '0' + userDate[1]].join('-');
@@ -37,9 +39,12 @@ module.exports = {
 		}
 
 		const config = {
-			headers: { 'X-Auth-Token': '8ec7de5a5fb84f31ba8ae4f408a8082e', 'Accept-Encoding': 'application/json' },
+			headers: { 'X-Auth-Token': process.env.FOOTBALL_TOKEN, 'Accept-Encoding': 'application/json' },
 		};
-		axios.get(`https://api.football-data.org/v4/competitions/WC/matches?dateFrom=${dateWithHyphens}&dateTo=${dateWithHyphens}`, config)
+
+		await interaction.deferReply();
+
+		await axios.get(`https://api.football-data.org/v4/competitions/WC/matches?dateFrom=${dateWithHyphens}&dateTo=${dateWithHyphens}`, config)
 			.then((response) => {
 				for (const match of response.data.matches) {
 					const homeTeam = match.homeTeam.name;
@@ -53,7 +58,10 @@ module.exports = {
 						reply += teams + '\n';
 					}
 				}
-				return interaction.reply(reply);
+				return interaction.editReply(reply);
+			})
+			.catch(error => {
+				return interaction.editReply('```ansi\n No hay partidos para la fecha ```');
 			});
 	},
 };
