@@ -2,13 +2,13 @@ const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('weather')
-		.setDescription('Replies with Pong!')
+		.setName('tiempo')
+		.setDescription('Entrega el clima de la ciudad indicada')
 		.addStringOption(option =>
 			option.setName('city')
 				.setDescription('Ciudad')
 				.setRequired(true)),
 	async execute(interaction) {
-		return interaction.reply('Pong!');
+		return interaction.reply('Clima!');
 	},
 };
