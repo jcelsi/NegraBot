@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const axios = require('axios');
+require('dotenv').config();
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -30,6 +31,7 @@ module.exports = {
 			dateWithHyphens = [year, month, '0' + (day + 1)].join('-');
 			break;
 		default:
+			// eslint-disable-next-line no-case-declarations
 			const userDate = interaction.options.getString('fecha').split(' ');
 			reply = `Los partidos para el ${userDate[0]} ${userDate[1]} son:\n`;
 			dateWithHyphens = [year, month, '0' + userDate[1]].join('-');
@@ -37,7 +39,7 @@ module.exports = {
 		}
 
 		const config = {
-			headers: { 'X-Auth-Token': '8ec7de5a5fb84f31ba8ae4f408a8082e', 'Accept-Encoding': 'application/json' },
+			headers: { 'X-Auth-Token': process.env.FOOTBALL_TOKEN, 'Accept-Encoding': 'application/json' },
 		};
 
 		await interaction.deferReply();
