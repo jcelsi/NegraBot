@@ -9,12 +9,10 @@ module.exports = {
 		.setDescription('Foto random de la negra'),
 	async execute(interaction) {
 
-		console.log(data);
+		const url = data.urls[Math.floor(Math.random() * data.urls.length)];
 		const exampleEmbed = new EmbedBuilder()
 			.setColor(0x0099FF)
-			.setTitle('Negra')
-			.setDescription('Some description here')
-			.setImage(data.urls.sample());
+			.setImage(url);
 
 		return interaction.reply({ embeds: [exampleEmbed] });
 	},
