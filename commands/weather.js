@@ -34,7 +34,7 @@ module.exports = {
 				return interaction.editReply('```ansi\n' + result + '\n```');
 			})
 			.catch(error => {
-				return interaction.editReply('```ansi\n Ciudad no encontrada ```');
+				return interaction.editReply(` \`\`\`ansi\n ${error} \`\`\` `);
 			});
 	},
 };
