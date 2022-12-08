@@ -30,12 +30,12 @@ module.exports = {
 			reply = 'Los partidos para mañana son:\n';
 			dateWithHyphens = [year, month, '0' + (day + 1)].join('-');
 			break;
-		default:
-			// eslint-disable-next-line no-case-declarations
+		default:{
 			const userDate = interaction.options.getString('fecha').split(' ');
 			reply = `Los partidos para el ${userDate[0]} ${userDate[1]} son:\n`;
 			dateWithHyphens = [year, month, '0' + userDate[1]].join('-');
 			break;
+		}
 		}
 
 		const config = {
