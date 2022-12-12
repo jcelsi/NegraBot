@@ -1,7 +1,10 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const http = require('http');
 require('dotenv').config();
+
+http.createServer((req, res) => res.end('Hello World').listen(8080, '0.0.0.0'));
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
